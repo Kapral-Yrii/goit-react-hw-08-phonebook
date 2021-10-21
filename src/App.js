@@ -1,65 +1,41 @@
 import s from './App.module.css';
-import { Component } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { ContactForm } from './components/ContactForm/ContactForm'
 import { ContactList } from './components/ContactList/ContactList'
 import { Filter } from './components/Filter/Filter'
-import{ Notification } from './components/Notification/Notification'
+import { Notification } from './components/Notification/Notification'
+import { useLocalStorage } from './hooks/useLocalStorage'
 
-class App extends Component {
-  state = {
-    contacts: [],
-    filter: ''
-  }
-  componentDidMount() {
-    const localContacts = localStorage.getItem('contacts')
-    if (localContacts) {
-        this.setState({
-        contacts: JSON.parse(localContacts)
-      })
-    }
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.contacts !== this.state.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
-    }
-  }
-  
-  addNewContact = (newContact) => {
-    this.setState((prev) => {
-      return ({
-        contacts: [...prev.contacts, newContact]
-      })
-    })
-  }
-  deleteContact = (e) => {
-    const id = e.target.dataset.id
-    this.setState((prev) => {
-      return ({
-        contacts: prev.contacts.filter(e => e.id !== id)
-      })
-    })
-  }
-  filterContactByName = (e) => {
-    this.setState({ filter: e.target.value.toLowerCase()})
-  }
+function App() {
+    const [contacts, setContacts] = useLocalStorage('contacts',[])
+    const [filter, setFilter] = useState('')
 
-  render() {
-    const filterContacts = this.state.contacts.filter(e => e.name.toLowerCase().includes(this.state.filter))
+    const addNewContact = useCallback((newContact) => {
+        setContacts(prev => [...prev, newContact])
+    }, [setContacts])
+
+    const deleteContact = (e) => {
+        const id = e.target.dataset.id
+        setContacts(prev => prev.filter(e => e.id !== id))
+    }
+
+    const filterContactByName = (e) => {
+        setFilter(e.target.value.toLowerCase())
+    }
+
+    const filterContacts = useMemo(() => contacts.filter(e => e.name.toLowerCase().includes(filter)), [contacts, filter])
 
     return (
       <div className={s.app}>
         <h1 className={s.title}>Phonebook</h1>
-        <ContactForm addNewContact={this.addNewContact} contactList={this.state.contacts}/>
+        <ContactForm addNewContact={addNewContact} contactList={contacts}/>
         <h2 className={s.title}>Contacts</h2>
-        {this.state.contacts.length > 0 ? (
+        {contacts.length > 0 ? (
           <>
-            <Filter filterContactByName={this.filterContactByName}/>
-            <ContactList contacts={filterContacts} deleteContact={this.deleteContact} />
+            <Filter filterContactByName={filterContactByName}/>
+            <ContactList contacts={filterContacts} deleteContact={deleteContact} />
           </>
         ) : (<Notification/>)}
-        
       </div>)
-  }   
 }
-
 export default App;
