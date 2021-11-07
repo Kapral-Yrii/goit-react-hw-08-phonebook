@@ -1,11 +1,17 @@
 import PropTypes from 'prop-types'
 import { v4 as uuid } from 'uuid'
 import s from './ContactForm.module.css'
-import { useState, useCallback} from 'react'
+import { useState, useCallback } from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import * as actions from '../../redux/contacts/contacts-actions'
+import { getItems } from '../../redux/contacts/contacts-selectors'
 
-export function ContactForm({contactList, addNewContact}) {
+export function ContactForm() {
     const [name, setName] = useState('')
     const [number, setNumber] = useState('')
+    const contacts = useSelector(getItems)
+    const dispatch = useDispatch() 
+  
 
     const handleChange = useCallback((e) => {
         switch (e.target.name) {
@@ -28,15 +34,15 @@ export function ContactForm({contactList, addNewContact}) {
         name: name,
         number: number,
       }
-      const checkSameContact = contactList.find(e => e.name.toLowerCase() === newContact.name.toLowerCase())
+      const checkSameContact = contacts.find(e => e.name.toLowerCase() === newContact.name.toLowerCase())
       if (!checkSameContact) {
-        addNewContact(newContact)
+        dispatch(actions.addNewContact(newContact))
       } else {
         alert(`${checkSameContact.name} is already in contacts`)
       }
 
       resetForm()
-    }, [addNewContact, contactList, name, number])
+    }, [contacts, dispatch, name, number])
 
     const resetForm = () => {
         setName('')
@@ -77,6 +83,6 @@ export function ContactForm({contactList, addNewContact}) {
 }
 
 ContactForm.propTypes = {
-  contactList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-  addNewContact: PropTypes.func
+  contacts: PropTypes.array,
+  dispatch: PropTypes.func
 }
