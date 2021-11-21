@@ -5,12 +5,16 @@ import { useState, useCallback } from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import * as actions from '../../redux/contacts/contacts-actions'
 import { getItems } from '../../redux/contacts/contacts-selectors'
+import { useCreateContactMutation } from '../../redux/contactsAPI'
+
 
 export function ContactForm() {
     const [name, setName] = useState('')
     const [number, setNumber] = useState('')
     const contacts = useSelector(getItems)
-    const dispatch = useDispatch() 
+  // const dispatch = useDispatch()
+    const [addContact] = useCreateContactMutation()
+  // console.log('data', contacts);
   
 
     const handleChange = useCallback((e) => {
@@ -28,21 +32,23 @@ export function ContactForm() {
     
     const handleSubmit = useCallback((e) => {
       e.preventDefault()
-      const contactId = uuid()
+      // const contactId = uuid()
       const newContact = {
-        id: contactId,
+        // id: contactId,
         name: name,
-        number: number,
+        phone: number,
       }
-      const checkSameContact = contacts.find(e => e.name.toLowerCase() === newContact.name.toLowerCase())
+      const checkSameContact = contacts.data.find(e => e.name.toLowerCase() === newContact.name.toLowerCase())
       if (!checkSameContact) {
-        dispatch(actions.addNewContact(newContact))
+      //   // dispatch(actions.addNewContact(newContact))
+        addContact(newContact)
       } else {
         alert(`${checkSameContact.name} is already in contacts`)
       }
+      
 
       resetForm()
-    }, [contacts, dispatch, name, number])
+    }, [addContact, contacts, name, number])
 
     const resetForm = () => {
         setName('')
