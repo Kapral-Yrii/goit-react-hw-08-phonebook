@@ -37,7 +37,7 @@ export function ContactForm() {
       if (!checkSameContact) {
         addContact(newContact)
       } else {
-        alert(`${checkSameContact.name} is already in contacts`)
+        toast(`${checkSameContact.name} is already in contacts`, {position: 'top-center'})
       }
       resetForm()
     }, [addContact, contacts, name, number])
