@@ -1,21 +1,18 @@
 import PropTypes from 'prop-types'
-import { v4 as uuid } from 'uuid'
 import s from './ContactForm.module.css'
-import { useState, useCallback } from 'react'
-import {useSelector, useDispatch} from 'react-redux'
-import * as actions from '../../redux/contacts/contacts-actions'
-import { getItems } from '../../redux/contacts/contacts-selectors'
+import { useState, useCallback, useEffect } from 'react'
+import {useSelector} from 'react-redux'
+import { getContacts } from '../../redux/contacts/contacts-selectors'
 import { useCreateContactMutation } from '../../redux/contactsAPI'
+import Loader from "react-loader-spinner"
+import toast, { Toaster } from 'react-hot-toast';
 
 
 export function ContactForm() {
     const [name, setName] = useState('')
     const [number, setNumber] = useState('')
-    const contacts = useSelector(getItems)
-  // const dispatch = useDispatch()
-    const [addContact] = useCreateContactMutation()
-  // console.log('data', contacts);
-  
+    const contacts = useSelector(getContacts)
+    const [addContact , { isLoading, isSuccess, isError }] = useCreateContactMutation()
 
     const handleChange = useCallback((e) => {
         switch (e.target.name) {
@@ -32,28 +29,32 @@ export function ContactForm() {
     
     const handleSubmit = useCallback((e) => {
       e.preventDefault()
-      // const contactId = uuid()
       const newContact = {
-        // id: contactId,
         name: name,
         phone: number,
       }
-      const checkSameContact = contacts.data.find(e => e.name.toLowerCase() === newContact.name.toLowerCase())
+      const checkSameContact = contacts.find(e => e.name.toLowerCase() === newContact.name.toLowerCase())
       if (!checkSameContact) {
-      //   // dispatch(actions.addNewContact(newContact))
         addContact(newContact)
       } else {
         alert(`${checkSameContact.name} is already in contacts`)
       }
-      
-
       resetForm()
     }, [addContact, contacts, name, number])
 
     const resetForm = () => {
         setName('')
         setNumber('')
-    }
+  }
+  
+  useEffect(() => {
+        if (isSuccess) {
+            toast.success('Contact created')
+        }
+        if (isError) {
+            toast.error('Oops, there was an error. Contact not created')
+        }
+    },[isSuccess, isError])
 
     return(
       <form onSubmit={handleSubmit} className={s.form}>
@@ -83,7 +84,11 @@ export function ContactForm() {
             required
           />
         </label>
-        <button type="submit" className={s.button}>Add contact</button>
+        <button type="submit" className={s.button} disabled={isLoading}>
+          {isLoading ? (<Loader type="Oval" color="black" height={46} width={46} />) : (<>Add contact</>)}
+        </button>
+        {isSuccess && <Toaster position="top-right" />}
+        {isError && <Toaster position="top-right" />}
       </form>
     )
 }

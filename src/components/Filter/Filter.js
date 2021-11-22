@@ -3,13 +3,13 @@ import s from './Filter.module.css'
 import {useDispatch, useSelector} from 'react-redux'
 import * as actions from '../../redux/contacts/contacts-actions'
 import { useCallback } from 'react'
-import { getItems } from '../../redux/contacts/contacts-selectors'
+import { getItems, getContacts } from '../../redux/contacts/contacts-selectors'
 
 
 export function Filter() {
     const dispatch = useDispatch()
-    const contacts = useSelector(getItems)
-    console.log(contacts);
+    // const contacts = useSelector(getItems)
+    // console.log(contacts);
 
     const onChange = useCallback((e) => {
         const value = e.target.value.toLowerCase()
@@ -17,12 +17,10 @@ export function Filter() {
     }, [dispatch])
 
     return (
-        <>
-            {contacts && (<label className={s.label}>
-                Find contact by name
-                <input className={s.input} type="text" onChange={onChange}/>
-            </label>)}
-        </>
+        <label className={s.label}>
+            Find contact by name
+            <input className={s.input} type="text" onChange={onChange}/>
+        </label>
     )
 }
 
