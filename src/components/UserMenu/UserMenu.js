@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
+import s from './UserMenu.module.css'
 
 export function UserMenu() {
     return (
-        <ul>
-            <li>Hello user</li>
-            <li>
+        <ul className={s.list}>
+            <li className={s.item}>Hello user</li>
+            <li className={s.item}>
                 <Link to="/login">
                     <button type="button">Logout</button>
                 </Link>

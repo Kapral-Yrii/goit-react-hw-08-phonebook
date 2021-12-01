@@ -1,6 +1,7 @@
 import { Container } from './components/Container/Container';
 import { AppBar } from './components/AppBar/AppBar';
 import PrivateRoute from './components/Routes/PrivateRoute';
+import PublicRoute from './components/Routes/PublicRoute';
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -17,10 +18,10 @@ function App() {
       <AppBar/>
       <Suspense fallback={'Loading...'}>
         <Routes>
-          <Route path="/" element={<HomeView />} />
-          <Route path={"/contacts"} element={<PrivateRoute component={ContactsView} />} />
-          <Route path="/login" element={<LoginView/>}/>
-          <Route path="/register" element={<RegisterView/>}/>
+          <Route exact path="/" element={<PublicRoute component={HomeView}/>}/>
+          <Route path="/contacts" element={<PrivateRoute component={ContactsView}/>}/>
+          <Route path="/login" element={<PublicRoute component={LoginView} restricted/>}/>
+          <Route path="/register" element={<PublicRoute component={RegisterView} restricted/>}/>
         </Routes>
       </Suspense>
     </Container>
