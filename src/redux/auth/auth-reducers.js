@@ -9,7 +9,7 @@ const initialState = {
 }
 
 const user = createReducer(initialState.user, {
-    [actions.user]: (_, {payload}) => [...payload]
+    [actions.user]: (_, {payload}) => payload
 })
 
 const token = createReducer(initialState.token, {
