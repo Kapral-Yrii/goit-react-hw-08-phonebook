@@ -13,6 +13,7 @@ const HomeView = lazy(() => import('./views/HomeView/HomeView'))
 const ContactsView = lazy(() => import('./views/ContactsView/ContactsView'))
 const RegisterView = lazy(() => import('./views/RegisterView/RegisterView'))
 const LoginView = lazy(() => import('./views/LoginView/LoginView'))
+const PageNotFound = lazy(() => import('./views/PageNotFound/PageNotFound'))
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
               <Route path="/contacts" element={<PrivateRoute component={ContactsView} navigateTo="/login" />} />
               <Route path="/login" element={<PublicRoute component={LoginView} restricted navigateTo="/contacts" />} />
               <Route path="/register" element={<PublicRoute component={RegisterView} restricted navigateTo="/contacts" />} />
+              <Route path="*" element={<PublicRoute component={PageNotFound} />}/>
             </Routes>
           </Suspense>
         </Container>}
