@@ -4,42 +4,16 @@ import { useDispatch } from 'react-redux'
 import * as actions from '../../redux/auth/auth-actions'
 import toast, { Toaster } from 'react-hot-toast';
 import Loader from "react-loader-spinner"
-import s from './LoginView.module.css'
-// //////////////////////////////////////////
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { alpha, styled } from '@mui/material/styles';
-import Input from '@mui/material/Input'
+import { Input } from '../../components/InputStyle'
 
 const theme = createTheme()
-
-const ariaLabel = { 'aria-label': 'description' }
-const CssTextField = styled(TextField)({
-  '& label.Mui-focused': {
-    color: '#1976d2',
-  },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: '#1976d2',
-  },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: 'red',
-    },
-    '&:hover fieldset': {
-      borderColor: 'yellow',
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: 'green',
-    },
-  },
-});
 
 export default function LoginView() {
     const [email, setEmail] = useState('')
@@ -89,93 +63,60 @@ export default function LoginView() {
     },[isError])
 
     return (
-        // <form onSubmit={handleSubmit}>
-        //     <label>
-        //         Email
-        //         <br/>
-        //         <input
-        //             onChange={handleChange}
-        //             type="email"
-        //             name="email"
-        //             value={email}
-        //             required
-        //         />
-        //     </label>
-        //         <br/>
-        //     <label>
-        //         Password
-        //         <br/>
-        //         <input
-        //             onChange={handleChange}
-        //             type="password"
-        //             name="password"
-        //             value={password}
-        //             required/>
-        //     </label>
-        //     <br />
-        //     <button type="submit" disabled={isLoading}>
-        //       {isLoading ? (<Loader type="Oval" color="black" height={10} width={10} />) : (<>Login</>)}
-        //     </button>
-        //     {isError && <Toaster position="top-right" />}
-        // </form>
-        <div className={s.form}>
-        <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        {/* <CssBaseline /> */}
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            color: 'white',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: '#1976d2' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in to Phonebook
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-             <TextField
-            //   sx={{color: 'white'}}
-            variant="standard"                
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-                            autoFocus
-                            onChange={handleChange}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-                            id="password"
-                            variant="standard"
-                            autoComplete="current-password"
-                            onChange={handleChange}
-                        />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Log In
-            </Button>
-          </Box>
-        </Box>
-      </Container>
-            </ThemeProvider>
-            </div>
+        <>
+          <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+              <Box
+                sx={{
+                  marginTop: 8,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  color: 'white',
+                }}
+              >
+                <Avatar sx={{ m: 1, bgcolor: '#1976d2' }}>
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Sign in to Phonebook
+                </Typography>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                  <Input
+                    label="Email"
+                    name="email"
+                    type="email"
+                    margin="normal"
+                    variant="standard"
+                    autoComplete="email"
+                    fullWidth
+                    required
+                    onChange={handleChange}
+                  />
+                  <Input
+                    label="Password"
+                    name="password"
+                    type="password"
+                    margin="normal"
+                    variant="standard"
+                    autoComplete="current-password"
+                    fullWidth
+                    required
+                    onChange={handleChange}
+                  />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    {isLoading ? (<Loader type="Oval" color="white" height={24} width={24}/>) : (<>Log in</>)}
+                  </Button>
+                </Box>
+              </Box>
+            </Container>
+          </ThemeProvider>
+          {isError && <Toaster position="top-right" />}
+        </>
     )
 }
