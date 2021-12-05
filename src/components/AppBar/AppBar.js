@@ -64,12 +64,12 @@ export function AppBar() {
               {isLoggedIn && <MenuItem onClick={handleClose}><UserMenu /></MenuItem>}
             </Menu>
           </div>
-          <div>
+          {isLoggedIn && <div>
             <ul className={s.userData}>
               <li className={s.item}>{<AccountCircleIcon/>}</li>
               <li className={s.item}>{userName}</li>
             </ul>
-          </div>
+          </div>}
           </>)}
       </header>
   )
