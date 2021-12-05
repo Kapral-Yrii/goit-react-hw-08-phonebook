@@ -6,3 +6,54 @@
 .item {
   margin-right: 20px;
 }
+.link {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  text-decoration: none;
+  padding: 0;
+  margin: 0 5px;
+  font-weight: 500;
+  color: white;
+  font-size: 18px;
+}
+.link::after {
+  transition: all 0.4s ease-out;
+  content: ' ';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #1976d2;
+  position: absolute;
+  bottom: 1px;
+  left: -100%;
+}
+.link:hover:after {
+  left: 0;
+}
+.link button {
+  color: white;
+}
+.link span {
+  border-radius: 10px;
+}
+.link:hover button,
+.link:focus button {
+  color: #1976d2;
+}
+.activeLink {
+  composes: link;
+}
+.activeLink::after {
+  content: ' ';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #1976d2;
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+}
+.activeLink button {
+  color: #1976d2;
+}

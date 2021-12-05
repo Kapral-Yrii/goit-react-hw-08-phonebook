@@ -7,7 +7,9 @@ import { Route, Routes } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { getToken } from './redux/auth/auth-selectors'
 import { useCurrentUserMutation } from './redux/authAPI'
+import Loader from "react-loader-spinner"
 import * as actions from './redux/auth/auth-actions'
+import s from './App.module.css'
 
 const HomeView = lazy(() => import('./views/HomeView/HomeView'))
 const ContactsView = lazy(() => import('./views/ContactsView/ContactsView'))
@@ -47,7 +49,7 @@ function App() {
       {!isRefreshing &&
         <Container>
           <AppBar />
-          <Suspense fallback={'Loading...'}>
+          <Suspense fallback={<div className={s.loader}><Loader type="Oval" color="#1976d2" height={50} width={50}/></div>}>
             <Routes>
               <Route exact path="/" element={<PublicRoute component={HomeView} />} />
               <Route path="/contacts" element={<PrivateRoute component={ContactsView} navigateTo="/login" />} />

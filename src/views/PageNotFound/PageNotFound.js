@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
-// import s from './NotFound.module.css'
+import s from './PageNotFound.module.css'
+import Button from '@mui/material/Button';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function PageNotFound() {
     return (
-        <>
-            <Link to="/">
-                <button type="button">← Back to Home</button>
+        <div className={s.container}>
+            <Link to="/" className={s.link}>
+                <Button variant="contained" startIcon={<ArrowBackIcon />}>
+                  Back to Home
+                </Button>
             </Link>
-            <p>Page not found! Please back to Home</p>
-        </>
+            <p className={s.description}>Page not found! Please back to Home</p>
+        </div>
     )
 }

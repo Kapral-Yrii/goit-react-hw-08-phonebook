@@ -14,7 +14,16 @@ export const Input = styled(TextField)({
   '& .css-ghsjzk-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled):before': {
     borderBottomColor: '#ffffff'
   },
+  '& .css-ghsjzk-MuiInputBase-root-MuiInput-root:before': {
+    borderBottomColor: "#1976d278"
+  },
+  '& .css-1480iag-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled):before': {
+    borderBottomColor: '#ffffff'
+  },
+  '& .css-1480iag-MuiInputBase-root-MuiInput-root:before': {
+    borderBottomColor: "#1976d278"
+  },
   '& .MuiInput-underline:after': {
     borderBottomColor: '#1976d2',
-  },
+  }
 });

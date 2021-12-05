@@ -2,3 +2,15 @@
   color: white;
   text-align: center;
 }
+.titleContainer {
+  max-width: 530px;
+  border-radius: 10px;
+  margin: 30px auto;
+  padding: 15px;
+  background-color: #0000005b;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+    1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+.link {
+  color: #1976d2;
+}

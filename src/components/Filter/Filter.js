@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
-import s from './Filter.module.css'
 import {useDispatch} from 'react-redux'
 import * as actions from '../../redux/contacts/contacts-actions'
+import { Input } from '../InputStyle'
 import { useCallback } from 'react'
 
 
@@ -14,10 +14,15 @@ export function Filter() {
     }, [dispatch])
 
     return (
-        <label className={s.label}>
-            Find contact by name
-            <input className={s.input} type="text" onChange={onChange}/>
-        </label>
+        <Input
+            type="text"
+            onChange={onChange}
+            label="Find contact by name"
+            margin="normal"
+            variant="standard"
+            fullWidth
+            sx={{ mt: 0 }}
+        />
     )
 }
 

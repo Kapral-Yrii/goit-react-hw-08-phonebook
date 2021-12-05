@@ -3,7 +3,9 @@ import s from './ContactListItem.module.css'
 import { useEffect} from 'react'
 import { useDeleteContactMutation } from '../../redux/contactsAPI'
 import toast, { Toaster } from 'react-hot-toast';
-import Loader from "react-loader-spinner"
+import LoadingButton from '@mui/lab/LoadingButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 export function ContactListItem({name, phone, id}) {
     const [deleteContact, { isLoading, isSuccess, isError}] = useDeleteContactMutation()
@@ -21,15 +23,15 @@ export function ContactListItem({name, phone, id}) {
         <>
             <li className={s.item}>
                 {name}: {phone}
-                <button
-                    className={s.button}
-                    onClick={() =>deleteContact(id)}
-                    disabled={isLoading}
-                    >
-                    {isLoading ?
-                        (<Loader type="Oval" color="black" height={10} width={10} />)
-                        : (<>X</>)}
-                </button>
+                <div className={s.buttonContainer}>
+                    <LoadingButton
+                        color="primary"
+                        loading={isLoading}
+                        onClick={() => deleteContact(id)}
+                        startIcon={<DeleteIcon />}
+                        variant="contained"
+                    />
+                </div>
             </li>
             {isSuccess && <Toaster position="top-right" />}
             {isError && <Toaster position="top-right" />}

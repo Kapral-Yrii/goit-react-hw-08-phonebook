@@ -1,7 +1,7 @@
 .item {
   display: flex;
   justify-content: space-between;
-  margin: 0 30px 10px 30px;
+  margin-bottom: 15px;
 }
 .button {
   height: 20px;
@@ -20,4 +20,20 @@
 .button:hover,
 .button:focus {
   transform: scale(1.2);
+}
+.item button {
+  min-width: 40px;
+  padding: 3px 5px;
+}
+.item span {
+  margin: 0;
+}
+.item svg {
+  margin: 0 auto;
+}
+.buttonContainer {
+  width: 40px;
+  height: 26px;
+  background-color: white;
+  border-radius: 4px;
 }

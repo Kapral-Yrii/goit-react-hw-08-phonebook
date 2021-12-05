@@ -4,8 +4,10 @@ import { useState, useCallback, useEffect } from 'react'
 import {useSelector} from 'react-redux'
 import { getContacts } from '../../redux/contacts/contacts-selectors'
 import { useCreateContactMutation } from '../../redux/contactsAPI'
-import Loader from "react-loader-spinner"
 import toast, { Toaster } from 'react-hot-toast';
+import { Input } from '../InputStyle'
+import LoadingButton from '@mui/lab/LoadingButton';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 
 export function ContactForm() {
@@ -58,35 +60,42 @@ export function ContactForm() {
 
     return(
       <form onSubmit={handleSubmit} className={s.form}>
-        <label className={s.label}>
-          Name
-          <input
-            className={s.input}
-            onChange={handleChange}
-            type="text"
+        <Input
+            label="Name"
             name="name"
+            type="text"
+            margin="normal"
+            variant="standard"
             value={name}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
             required
-          />
-        </label>
-        <label className={s.label}>
-          Number
-          <input
-            className={s.input}
-            onChange={handleChange}
-            type="tel"
+          onChange={handleChange}
+          sx={{mt: 0}}
+        />
+        <Input
+            label="Number"
             name="number"
+            type="text"
+            margin="normal"
+            variant="standard"
             value={number}
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
             required
-          />
-        </label>
-        <button type="submit" className={s.button} disabled={isLoading}>
-          {isLoading ? (<Loader type="Oval" color="black" height={46} width={46} />) : (<>Add contact</>)}
-        </button>
+            onChange={handleChange} 
+        />
+        <div className={s.buttonContainer}>
+          <LoadingButton
+            type="submit"
+            color="primary"
+            loading={isLoading}
+            loadingPosition="start"
+            startIcon={<AddCircleOutlineIcon />}
+            variant="contained">
+            Add
+          </LoadingButton>
+        </div>
         {isSuccess && <Toaster position="top-right" />}
         {isError && <Toaster position="top-right" />}
       </form>
