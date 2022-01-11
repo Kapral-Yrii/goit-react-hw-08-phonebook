@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "persistor"
-    ]
+    ],
+    "editor.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace"
 }
